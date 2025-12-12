@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Register as Airline Staff</h1>
+
+        {% if error %}
+            <p style="color:red; font-weight:bold; margin-bottom:12px;">{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('staff_register') }}" method="POST" class="form-grid">
+            <div>
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div>
+                <label>First Name</label>
+                <input type="text" name="first_name" required>
+            </div>
+
+            <div>
+                <label>Last Name</label>
+                <input type="text" name="last_name" required>
+            </div>
+
+            <div>
+                <label>Date of Birth</label>
+                <input type="date" name="date_of_birth" required>
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div>
+                <label>Airline Name</label>
+                <select name="airline_name" required>
+                    {% for a in airlines %}
+                        <option value="{{ a.airline_name }}">{{ a.airline_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div>
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" required>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:8px;">
+                <button type="submit" class="btn-primary">Create Staff Account</button>
+            </div>
+        </form>
+
+        <p style="margin-top:16px;">
+            Already have a staff account?
+            <a href="{{ url_for('staff_login') }}">Login here</a>
+        </p>
+        <p>
+            Are you a customer?
+            <a href="{{ url_for('customer_register') }}">Register as customer</a>
+        </p>
+
+        <a class="link-back" href="{{ url_for('index') }}">⬅ Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airplanes for {{ airline }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div><strong>Airline Staff – {{ airline }}</strong></div>
+        <div>
+            <a href="{{ url_for('staff_home') }}">Staff Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Airplanes for {{ airline }}</h1>
+
+        {% if planes %}
+        <table class="table">
+            <tr>
+                <th>Airplane ID</th>
+                <th>Seats</th>
+                <th>Manufacturer</th>
+                <th>Age</th>
+            </tr>
+            {% for plane in planes %}
+            <tr>
+                <td>{{ plane.airplane_id }}</td>
+                <td>{{ plane.num_seats }}</td>
+                <td>{{ plane.manufacturer }}</td>
+                <td>{{ plane.age }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No airplanes found for this airline yet.</p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rate Past Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+        <h1 class="page-title">Flights You Can Rate</h1>
+
+        {% if past_flights %}
+            <table>
+                <tr>
+                    <th>Airline</th>
+                    <th>Flight #</th>
+                    <th>Departure</th>
+                    <th>Action</th>
+                </tr>
+                {% for f in past_flights %}
+                <tr>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_datetime }}</td>
+                    <td>
+                        <a href="{{ url_for('rate_flight', ticket_id=f.ticket_id) }}">
+                            Rate this flight
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>You have no past flights available to rate.</p>
+        {% endif %}
+
+        <a class="link-back" href="{{ url_for('customer_home') }}">⬅ Back to Customer Home</a>
+    </div>
+</div>
+
+</body>
+</html>

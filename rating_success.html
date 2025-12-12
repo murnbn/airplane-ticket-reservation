@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rating Submitted</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Thank You! ⭐</h1>
+        <p class="subtitle">Your rating has been submitted.</p>
+
+        <a class="btn-primary" href="{{ url_for('my_flights') }}">View My Flights</a>
+        <a class="btn-secondary" href="{{ url_for('customer_home') }}">Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

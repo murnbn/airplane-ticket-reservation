@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Customers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+        <h1 class="page-title">
+            Customers for Flight {{ flight }} on {{ departure }}
+        </h1>
+
+        {% if customers %}
+            <table>
+                <tr>
+                    <th>Customer Email</th>
+                    <th>Seat Number</th>
+                </tr>
+                {% for c in customers %}
+                <tr>
+                    <td>{{ c.customer_email }}</td>
+                    <td>{{ c.seat_number }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No customers booked for this flight.</p>
+        {% endif %}
+
+        <a class="link-back" href="{{ url_for('staff_view_flights') }}">⬅ Back to Flights</a>
+    </div>
+</div>
+
+</body>
+</html>

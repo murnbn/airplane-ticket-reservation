@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div><strong>Air Ticket Reservation</strong></div>
+        <div>
+            Logged in as <strong>{{ username }}</strong>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Welcome, {{ username }} 👋</h1>
+        <p class="subtitle">What would you like to do today?</p>
+
+        <ul style="list-style:none; padding-left:0; margin-top:10px;">
+            <li style="margin-bottom:10px;">
+                <a class="btn-primary" href="{{ url_for('search') }}">🔍 Search Flights</a>
+            </li>
+            <li style="margin-bottom:10px;">
+                <a class="btn-secondary" href="{{ url_for('my_flights') }}">✈️ View My Flights</a>
+            </li>
+            <li style="margin-bottom:10px;">
+                <a class="btn-secondary" href="{{ url_for('rate_past_flights') }}">⭐ Rate Past Flights</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

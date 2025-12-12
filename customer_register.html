@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Register as Customer</h1>
+
+        {% if error %}
+            <p style="color:red; font-weight:bold; margin-bottom:12px;">{{ error }}</p>
+        {% endif %}
+
+        <form action="{{ url_for('customer_register') }}" method="POST" class="form-grid">
+            <!-- Account -->
+            <div>
+                <label>Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div>
+                <label>Name</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div>
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" required>
+            </div>
+
+            <!-- Address -->
+            <div>
+                <label>Building Number</label>
+                <input type="text" name="building_number" required>
+            </div>
+
+            <div>
+                <label>Street</label>
+                <input type="text" name="street" required>
+            </div>
+
+            <div>
+                <label>City</label>
+                <input type="text" name="city" required>
+            </div>
+
+            <div>
+                <label>State</label>
+                <input type="text" name="state" required>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <label>Phone Number</label>
+                <input type="text" name="phone_number" required>
+            </div>
+
+            <!-- Passport -->
+            <div>
+                <label>Passport Number</label>
+                <input type="text" name="passport_number" required>
+            </div>
+
+            <div>
+                <label>Passport Expiration</label>
+                <input type="date" name="passport_expiration" required>
+            </div>
+
+            <div>
+                <label>Passport Country</label>
+                <input type="text" name="passport_country" required>
+            </div>
+
+            <!-- Personal -->
+            <div>
+                <label>Date of Birth</label>
+                <input type="date" name="date_of_birth" required>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:8px;">
+                <button type="submit" class="btn-primary">Create Account</button>
+            </div>
+        </form>
+
+        <p style="margin-top:16px;">
+            Already have an account?
+            <a href="{{ url_for('customer_login') }}">Login here</a>
+        </p>
+        <p>
+            Are you airline staff?
+            <a href="{{ url_for('staff_register') }}">Register as staff</a>
+        </p>
+
+        <a class="link-back" href="{{ url_for('index') }}">⬅ Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>

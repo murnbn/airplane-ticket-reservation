@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff – Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+
+        <h1 class="page-title">Flights for {{ session['airline'] }}</h1>
+
+        <!-- FILTER PANEL -->
+        <div class="filter-card">
+            <form method="POST">
+                <h2>Filter Flights</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" name="start_date">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" name="end_date">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Departure Airport</label>
+                        <select name="dep_airport">
+                            <option value="">-- Any --</option>
+                            {% for a in airports %}
+                                <option value="{{ a.airport_code }}">{{ a.airport_code }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Arrival Airport</label>
+                        <select name="arr_airport">
+                            <option value="">-- Any --</option>
+                            {% for a in airports %}
+                                <option value="{{ a.airport_code }}">{{ a.airport_code }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary-full">Apply Filters</button>
+            </form>
+        </div>
+
+        {# ========== FILTERED VIEW ========== #}
+        {% if filters_applied %}
+
+            <h2 class="section-title">Filtered Results</h2>
+
+            {% if filtered %}
+            <table class="styled-table">
+                <tr>
+                    <th>Flight #</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for f in filtered %}
+                <tr>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_datetime }}</td>
+                    <td>{{ f.arrival_datetime }}</td>
+                    <td>{{ f.status }}</td>
+                    <td>
+                        <a href="{{ url_for('staff_change_status',
+                                            airline=f.airline_name,
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Change
+                        </a> |
+                        <a href="{{ url_for('staff_view_customers',
+                                            airline=f.airline_name,
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Customers
+                        </a>
+                        {% if f.departure_datetime < now %}
+                            | <a href="{{ url_for('staff_ratings',
+                                                flight=f.flight_number,
+                                                departure=f.departure_datetime|replace(' ', '_')) }}">
+                                Ratings
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No flights match your filter.</p>
+            {% endif %}
+
+            <a href="{{ url_for('staff_view_flights') }}" class="btn-secondary">⬅ Reset Filters</a>
+
+        {# ========== DEFAULT VIEW: UPCOMING + PAST SEPARATED ========== #}
+        {% else %}
+
+            <!-- UPCOMING -->
+            <h2 class="section-title">Upcoming Flights (Next 30 Days)</h2>
+
+            {% if upcoming %}
+            <table class="styled-table">
+                <tr>
+                    <th>Flight #</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for f in upcoming %}
+                <tr>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_datetime }}</td>
+                    <td>{{ f.arrival_datetime }}</td>
+                    <td>{{ f.status }}</td>
+                    <td>
+                        <a href="{{ url_for('staff_change_status',
+                                            airline=f.airline_name,
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Change
+                        </a> |
+                        <a href="{{ url_for('staff_view_customers',
+                                            airline=f.airline_name,
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Customers
+                        </a> | 
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No upcoming flights.</p>
+            {% endif %}
+
+            <!-- PAST -->
+            <h2 class="section-title" style="margin-top:40px;">Past Flights</h2>
+
+            {% if past %}
+            <table class="styled-table">
+                <tr>
+                    <th>Flight #</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for f in past %}
+                <tr>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_datetime }}</td>
+                    <td>{{ f.arrival_datetime }}</td>
+                    <td>{{ f.status }}</td>
+                    <td>
+                        <a href="{{ url_for('staff_view_customers',
+                                            airline=f.airline_name,
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Customers
+                        </a> |
+                        <a href="{{ url_for('staff_ratings',
+                                            flight=f.flight_number,
+                                            departure=f.departure_datetime|replace(' ', '_')) }}">
+                            Ratings
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No past flights.</p>
+            {% endif %}
+
+        {% endif %}
+
+        <br>
+        <a href="{{ url_for('staff_home') }}" class="btn-secondary">⬅ Back to Staff Home</a>
+
+    </div>
+</div>
+
+</body>
+</html>
+

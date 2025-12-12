@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rate Flight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Rate Your Flight</h1>
+
+        <p class="subtitle">
+            {{ ticket.airline_name }} {{ ticket.flight_number }} –
+            {{ ticket.departure_datetime }}
+        </p>
+
+        <form method="POST" class="form-grid">
+            <div>
+                <label>Rating (1–5)</label>
+                <select name="rating" required>
+                    <option value="1">1 – Very Bad</option>
+                    <option value="2">2 – Bad</option>
+                    <option value="3">3 – Okay</option>
+                    <option value="4">4 – Good</option>
+                    <option value="5">5 – Excellent</option>
+                </select>
+            </div>
+
+            <div style="grid-column:1 / -1;">
+                <label>Comment</label>
+                <textarea name="comment" rows="4"></textarea>
+            </div>
+
+            <div style="grid-column:1 / -1;">
+                <button type="submit" class="btn-primary">Submit Rating</button>
+                <a href="{{ url_for('my_flights') }}" class="btn-secondary">Back to My Flights</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

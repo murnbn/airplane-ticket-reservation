@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div><strong>{{ airline }}</strong> – Staff Portal</div>
+        <div>
+            {{ username }}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Welcome, {{ username }}</h1>
+        <p class="subtitle">Manage flights, airplanes, and reports for {{ airline }}.</p>
+
+        <ul style="list-style:none; padding-left:0; margin-top:10px;">
+            <li style="margin-bottom:10px;">
+                <a class="btn-primary" href="{{ url_for('staff_view_flights') }}">View Flights</a>
+            </li>
+            <li style="margin-bottom:10px;">
+                <a class="btn-secondary" href="{{ url_for('staff_create_flight') }}">Create New Flight</a>
+            </li>
+            <li style="margin-bottom:10px;">
+                <a class="btn-secondary" href="{{ url_for('staff_add_airplane') }}">Add Airplane</a>
+            </li>
+            <li style="margin-bottom:10px;">
+                <a class="btn-secondary" href="{{ url_for('staff_reports') }}">View Reports</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,479 @@
+/* ==== RESET ==== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
+}
+
+/* ==== TOP RIGHT LOGIN BUTTONS ==== */
+.top-right-buttons {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    gap: 12px;
+}
+
+.top-right-buttons a {
+    background: white;
+    color: #003b95;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid white;
+    transition: 0.25s;
+}
+
+.top-right-buttons a:hover {
+    background: #e3ebff;
+}
+
+/* ==== HERO SECTION ==== */
+.hero {
+    background: #003b95;
+    color: white;
+    padding: 110px 40px 150px 40px;
+    text-align: left;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+}
+
+.hero p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+/* Smaller hero for search page */
+.small-hero {
+    padding: 70px 40px 100px 40px;
+    text-align: center;
+}
+
+.small-hero h1 {
+    font-size: 34px;
+}
+
+/* ==== TRIP TYPE ==== */
+.trip-type-box {
+    background: white;
+    width: 90%;
+    max-width: 1050px;
+    margin: 10px auto;
+    padding: 40px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    color: #003b95;
+    font-weight: 600;
+    
+}
+
+.trip-type-box input[type="radio"] {
+    transform: scale(1.3);
+    margin-right: 30px;
+    
+}
+
+/* ==== SEARCH MODULE ==== */
+.search-module {
+    background: #ffb700;
+    width: 90%;
+    max-width: 1050px;
+    margin: -50px auto 0 auto;
+    padding: 25px;
+    border-radius: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+}
+
+/* ==== SEARCH FIELDS ==== */
+.search-field {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-label {
+    color: #555;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+/* Wrapper for selects/inputs in yellow search bar */
+.select-box {
+    background: white;
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: visible !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Inputs inside select-box */
+select,
+input[type="date"] {
+    width: 100%;
+    font-size: 16px;
+    border: none;
+    background: transparent;
+    appearance: auto !important;
+    -webkit-appearance: menulist !important;
+    cursor: pointer;
+}
+
+/* ==== GENERIC LAYOUT / CARDS ==== */
+.page-wrapper {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px 40px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+}
+
+/* Main page titles */
+.page-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #003b95;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* ==== FORMS ==== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px 20px;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-bottom: 6px;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* ==== BUTTONS ==== */
+.btn-primary,
+.search-btn {
+    background: #0071c2;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary:hover,
+.search-btn:hover {
+    background: #005a9d;
+}
+
+/* Slightly larger primary-style button for full-width/filter actions */
+.btn-primary-full {
+    width: 100%;
+    background: #003b95;
+    color: white;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-primary-full:hover {
+    background: #002e75;
+}
+
+/* Outline secondary button (back / subtle actions) */
+.btn-secondary {
+    background: #ffffff;
+    color: #0071c2;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid #0071c2;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background: #e3ebff;
+}
+
+/* Optional blue solid button (if you need it) */
+.btn-blue {
+    background: #003b95;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* ==== TABLES ==== */
+.table-card table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table-card th,
+.table-card td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.table-card th {
+    background: #f5f7fb;
+    font-weight: 600;
+}
+
+/* Reusable styled flight table */
+.styled-table {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto 25px auto;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+
+.styled-table th {
+    background: #003b95;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.styled-table td {
+    padding: 12px;
+}
+
+.styled-table tr:nth-child(even) {
+    background: #f3f6ff;
+}
+
+.styled-table tr:hover {
+    background: #e8f1ff;
+}
+
+.styled-table a {
+    color: #003b95;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.styled-table a:hover {
+    text-decoration: underline;
+}
+
+/* ==== BADGES ==== */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-on {
+    background: #e4f5e9;
+    color: #117a3e;
+}
+
+.badge-delayed {
+    background: #fff4e5;
+    color: #b15c00;
+}
+
+.badge-cancelled {
+    background: #fdecec;
+    color: #c53030;
+}
+
+/* ==== LINKS / BACK ==== */
+.link-back {
+    display: inline-block;
+    margin-top: 18px;
+    text-decoration: none;
+    color: #0071c2;
+    font-weight: 600;
+}
+
+.link-back:hover {
+    text-decoration: underline;
+}
+
+/* ==== TOP BAR FOR LOGGED-IN PAGES ==== */
+.top-bar {
+    background: #003b95;
+    color: #fff;
+    padding: 14px 20px;
+}
+
+.top-bar-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.top-bar a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 14px;
+    font-weight: 600;
+}
+
+.top-bar a:hover {
+    text-decoration: underline;
+}
+
+/* ==== FILTER AREAS ==== */
+/* Older simple filter box (if still used anywhere) */
+.filter-box {
+    background: #ffb700;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+}
+
+.filter-box h3 {
+    margin-bottom: 10px;
+    color: #003b95;
+}
+
+.filter-box label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.filter-box input,
+.filter-box select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+/* Newer fancy filter card (staff flights) */
+.filter-card {
+    background: #ffb700;
+    width: 90%;
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.filter-card h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #003b95;
+}
+
+/* FORM ROWS INSIDE FILTER CARD */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #444;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+/* ==== SECTION TITLES ==== */
+.section-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #003b95;
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto 15px auto;
+}

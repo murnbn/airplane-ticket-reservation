@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Round-Trip Purchase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Round-Trip Purchase</h1>
+        <p class="subtitle">
+            Onward: {{ onward_flight.airline_name }} {{ onward_flight.flight_number }}
+            ({{ onward_flight.departure_airport }} → {{ onward_flight.arrival_airport }})<br>
+            Return: {{ return_flight.airline_name }} {{ return_flight.flight_number }}
+            ({{ return_flight.departure_airport }} → {{ return_flight.arrival_airport }})
+        </p>
+
+        <form method="POST" class="form-grid">
+            <!-- hidden fields with flight keys -->
+            <input type="hidden" name="on_airline" value="{{ on_airline }}">
+            <input type="hidden" name="on_flight"  value="{{ on_flight }}">
+            <input type="hidden" name="on_dep"     value="{{ on_dep }}">
+            <input type="hidden" name="ret_airline" value="{{ ret_airline }}">
+            <input type="hidden" name="ret_flight"  value="{{ ret_flight }}">
+            <input type="hidden" name="ret_dep"     value="{{ ret_dep }}">
+
+            <div>
+                <label>Seat (Onward)</label>
+                {% if available_onward %}
+                    <select name="seat_onward" required>
+                        {% for s in available_onward %}
+                            <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <p style="color:red;">No seats left on onward flight.</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label>Seat (Return)</label>
+                {% if available_return %}
+                    <select name="seat_return" required>
+                        {% for s in available_return %}
+                            <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <p style="color:red;">No seats left on return flight.</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label>Card Type</label>
+                <select name="card_type" required>
+                    <option value="credit">Credit</option>
+                    <option value="debit">Debit</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Card Number</label>
+                <input type="text" name="card_number" required>
+            </div>
+
+            <div>
+                <label>Expiration Date</label>
+                <input type="date" name="card_expiration" required>
+            </div>
+
+            <div>
+                <label>Name on Card</label>
+                <input type="text" name="name_on_card" required>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:10px;">
+                <button type="submit" class="btn-primary">
+                    Confirm Round-Trip Purchase
+                </button>
+                <a href="{{ url_for('search') }}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

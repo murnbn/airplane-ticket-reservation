@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Purchase Ticket</h1>
+
+        <p class="subtitle">
+            {{ airline_name }} {{ flight_number }} – {{ departure_datetime }}
+        </p>
+
+        <p><strong>From:</strong> {{ flight.departure_airport }} &nbsp;
+           <strong>To:</strong> {{ flight.arrival_airport }}</p>
+        <p><strong>Price:</strong> ${{ flight.base_price }}</p>
+        <hr style="margin:18px 0;">
+
+        <form method="POST" class="form-grid">
+            <div>
+                <label>Seat Number</label>
+
+                {% if available_seats %}
+                    <select name="seat_number" required>
+                        {% for s in available_seats %}
+                            <option value="{{ s }}">{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <p style="color:red; font-weight:bold;">
+                        No seats available on this flight.
+                    </p>
+                {% endif %}
+            </div>
+
+
+            <div>
+                <label>Card Type</label>
+                <select name="card_type" required>
+                    <option value="credit">Credit</option>
+                    <option value="debit">Debit</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Card Number</label>
+                <input type="text" name="card_number" required>
+            </div>
+
+            <div>
+                <label>Expiration Date</label>
+                <input type="date" name="card_expiration" required>
+            </div>
+
+            <div>
+                <label>Name on Card</label>
+                <input type="text" name="name_on_card" required>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:8px;">
+                <button type="submit" class="btn-primary">Confirm Purchase</button>
+                <a href="{{ url_for('search') }}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

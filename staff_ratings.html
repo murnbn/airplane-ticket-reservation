@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flight Ratings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+        <h1 class="page-title">
+            Ratings for Flight {{ request.view_args['flight'] }} ({{ request.view_args['departure'] }})
+        </h1>
+
+        <p class="subtitle">
+            Average Rating:
+            <strong>{{ avg.avg_rating or "No ratings yet" }}</strong>
+        </p>
+
+        <h3>All Comments</h3>
+
+        {% if reviews %}
+            <table>
+                <tr>
+                    <th>Customer</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                </tr>
+                {% for r in reviews %}
+                <tr>
+                    <td>{{ r.customer_email }}</td>
+                    <td>{{ r.rating }}</td>
+                    <td>{{ r.comment }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No reviews for this flight.</p>
+        {% endif %}
+
+        <a class="link-back" href="{{ url_for('staff_view_flights') }}">⬅ Back to Flights</a>
+    </div>
+</div>
+
+</body>
+</html>
+

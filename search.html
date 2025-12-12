@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script>
+        function toggleReturnDate() {
+            let type = document.querySelector('input[name="trip_type"]:checked').value;
+            let returnSection = document.getElementById("return-date-section");
+            returnSection.style.display = (type === "round") ? "flex" : "none";
+        }
+    </script>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Search Flights</h1>
+
+        <form action="{{ url_for('search_result') }}" method="POST">
+
+            <!-- Trip type -->
+            <div style="margin-bottom:18px;">
+                <label style="margin-right:20px;">
+                    <input type="radio" name="trip_type" value="oneway"
+                           checked onclick="toggleReturnDate()"> One-way
+                </label>
+                <label>
+                    <input type="radio" name="trip_type" value="round"
+                           onclick="toggleReturnDate()"> Round-trip
+                </label>
+            </div>
+
+            <div class="form-grid">
+                <div>
+                    <label>Leaving From</label>
+                    <select name="source" required>
+                        <option value="">Select Airport</option>
+                        {% for a in airports %}
+                        <option value="{{ a.airport_code }}">{{ a.city }} ({{ a.airport_code }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Going To</label>
+                    <select name="destination" required>
+                        <option value="">Select Airport</option>
+                        {% for a in airports %}
+                        <option value="{{ a.airport_code }}">{{ a.city }} ({{ a.airport_code }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Departure Date</label>
+                    <input type="date" name="departure_date" required>
+                </div>
+
+                <div id="return-date-section" style="display:none;">
+                    <label>Return Date</label>
+                    <input type="date" name="return_date">
+                </div>
+            </div>
+
+            <div style="margin-top:18px;">
+                <button class="btn-primary" type="submit">Explore</button>
+                {% if session.get('role') == 'customer' %}
+                    <a href="{{ url_for('customer_home') }}" class="btn-secondary">Back to Home</a>
+                {% elif session.get('role') == 'staff' %}
+                    <a href="{{ url_for('staff_home') }}" class="btn-secondary">Back to Home</a>
+                {% else %}
+                    <a href="{{ url_for('index') }}" class="btn-secondary">Back to Home</a>
+                {% endif %}
+
+            </div>
+        </form>
+
+        <hr style="margin:20px 0;">
+
+        {% if session.get('username') %}
+            <p>Logged in as <strong>{{ session['username'] }}</strong>.
+                <a href="{{ url_for('logout') }}">Logout</a></p>
+        {% else %}
+            <p>
+                <a href="{{ url_for('customer_login') }}">🔑 Customer Login</a> |
+                <a href="{{ url_for('customer_register') }}">🧍 Register</a>
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
+
+

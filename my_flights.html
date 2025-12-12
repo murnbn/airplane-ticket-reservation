@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div><strong>My Flights</strong></div>
+        <div>
+            <a href="{{ url_for('customer_home') }}">Customer Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+        <h1 class="page-title">My Flights</h1>
+
+        {% if flights %}
+            <table>
+                <tr>
+                    <th>Airline</th>
+                    <th>Flight #</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Seat</th>
+                    <th>Payment</th>
+                    <th>Rate</th>
+                </tr>
+                {% for f in flights %}
+                <tr>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.flight_departure }}</td>
+                    <td>{{ f.arrival_datetime }}</td>
+                    <td>{{ f.seat_number }}</td>
+                    <td>${{ f.base_price }} ({{ f.payment_method }})</td>
+                    <td><a href="{{ url_for('rate_flight', ticket_id=f.ticket_id) }}">Rate</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>You have no flights yet.</p>
+        {% endif %}
+
+        <a class="link-back" href="{{ url_for('customer_home') }}">⬅ Back to Customer Home</a>
+    </div>
+</div>
+
+</body>
+</html>

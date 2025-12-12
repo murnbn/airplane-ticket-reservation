@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .report-box { background: #fff; padding: 20px; border-radius: 8px; max-width: 800px; margin: auto; }
+        .report-box h2 { color: #003b95; }
+        .filter-section { margin-top: 20px; padding: 15px; background: #eef3ff; border-radius: 8px; }
+        .filter-section label { font-weight: bold; }
+        .btn { background: #005bb5; color: white; padding: 10px 16px; border-radius: 6px; border: none; cursor: pointer; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+    </style>
+</head>
+
+<body>
+
+<div class="report-box">
+<h2>Reports for {{ session['airline'] }}</h2>
+
+<div class="filter-section">
+    <h3>Choose a time period to see ticket sales</h3>
+
+    <form method="POST">
+
+        <!-- QUICK FILTERS -->
+        <p><strong>Quick Filter</strong></p>
+        <button class="btn" name="filter_type" value="last_month">Last Month</button>
+        <button class="btn" name="filter_type" value="last_year">Last Year</button>
+
+        <hr><br>
+
+        <!-- CUSTOM DATE RANGE -->
+        <p><strong>Custom date range</strong></p>
+
+        <label>From</label><br>
+        <input type="date" name="start_date" value="{{ start_date }}" required><br><br>
+
+        <label>To</label><br>
+        <input type="date" name="end_date" value="{{ end_date }}" required><br><br>
+
+        <button class="btn" name="filter_type" value="range">Apply Filter</button>
+    </form>
+</div>
+
+<br>
+
+<h3>Total Tickets Sold in This Period:</h3>
+<p><strong>{{ total.total_tickets }}</strong></p>
+
+<h3>Tickets Sold Per Month</h3>
+
+{% if monthly %}
+<table>
+    <tr>
+        <th>Month</th>
+        <th>Tickets Sold</th>
+    </tr>
+    {% for m in monthly %}
+    <tr>
+        <td>{{ m.month }}</td>
+        <td>{{ m.sold }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No data for this period.</p>
+{% endif %}
+
+<br>
+<a href="/staff_home" class="btn">⬅ Back to Staff Home</a>
+</div>
+
+</body>
+</html>
+

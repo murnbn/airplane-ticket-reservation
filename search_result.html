@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Flights</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card table-card">
+        <h1 class="page-title">Available Flights</h1>
+
+        <p class="subtitle">
+            {% if source and destination %}
+                {{ source }} → {{ destination }}
+            {% else %}
+                Your selected route
+            {% endif %}
+            &nbsp;·&nbsp;
+            {% if trip_type == "round" %}
+                Round-trip
+            {% else %}
+                One-way
+            {% endif %}
+        </p>
+
+        {# ============================================================
+           CASE 1: ROUND-TRIP + LOGGED-IN CUSTOMER
+           → choose onward + return flights, then continue to /purchase_round
+           ============================================================ #}
+        {% if trip_type == "round" and session.get('role') == 'customer' %}
+
+            <form method="GET" action="{{ url_for('purchase_round') }}">
+
+                <h2 class="section-title" style="margin-top:10px;">Onward Flights ({{ onward_flights|length }} found)</h2>
+
+                {% if onward_flights %}
+                <table class="styled-table">
+                    <tr>
+                        <th>Select</th>
+                        <th>Airline</th>
+                        <th>Flight #</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for f in onward_flights %}
+                    <tr>
+                        <td>
+                            <input type="radio" name="onward_choice"
+                                   value="{{ f.airline_name }}|{{ f.flight_number }}|{{ f.departure_datetime|replace(' ', '_') }}"
+                                   required>
+                        </td>
+                        <td>{{ f.airline_name }}</td>
+                        <td>{{ f.flight_number }}</td>
+                        <td>{{ f.departure_airport }}</td>
+                        <td>{{ f.arrival_airport }}</td>
+                        <td>{{ f.departure_datetime }}</td>
+                        <td>{{ f.arrival_datetime }}</td>
+                        <td>
+                            {% if f.status == 'On-Time' %}
+                                <span class="badge badge-on">On-Time</span>
+                            {% elif f.status == 'Delayed' %}
+                                <span class="badge badge-delayed">Delayed</span>
+                            {% elif f.status == 'Cancelled' %}
+                                <span class="badge badge-cancelled">Cancelled</span>
+                            {% else %}
+                                {{ f.status }}
+                            {% endif %}
+                        </td>
+                        <td>${{ f.base_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                    <p>No onward flights found.</p>
+                {% endif %}
+
+                <h2 class="section-title">Return Flights ({{ return_flights|length }} found)</h2>
+
+                {% if return_flights %}
+                <table class="styled-table">
+                    <tr>
+                        <th>Select</th>
+                        <th>Airline</th>
+                        <th>Flight #</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                    </tr>
+                    {% for f in return_flights %}
+                    <tr>
+                        <td>
+                            <input type="radio" name="return_choice"
+                                   value="{{ f.airline_name }}|{{ f.flight_number }}|{{ f.departure_datetime|replace(' ', '_') }}"
+                                   required>
+                        </td>
+                        <td>{{ f.airline_name }}</td>
+                        <td>{{ f.flight_number }}</td>
+                        <td>{{ f.departure_airport }}</td>
+                        <td>{{ f.arrival_airport }}</td>
+                        <td>{{ f.departure_datetime }}</td>
+                        <td>{{ f.arrival_datetime }}</td>
+                        <td>
+                            {% if f.status == 'On-Time' %}
+                                <span class="badge badge-on">On-Time</span>
+                            {% elif f.status == 'Delayed' %}
+                                <span class="badge badge-delayed">Delayed</span>
+                            {% elif f.status == 'Cancelled' %}
+                                <span class="badge badge-cancelled">Cancelled</span>
+                            {% else %}
+                                {{ f.status }}
+                            {% endif %}
+                        </td>
+                        <td>${{ f.base_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                    <p>No return flights found.</p>
+                {% endif %}
+
+                <div style="margin-top:18px;">
+                    <button class="btn-primary" type="submit">
+                        Continue to seats & payment
+                    </button>
+                    <a href="{{ url_for('search') }}" class="btn-secondary">Back to Search</a>
+                </div>
+
+            </form>
+
+        {# ============================================================
+           CASE 2: ONE-WAY OR NOT LOGGED-IN
+           → normal tables + per-flight purchase/login links
+           ============================================================ #}
+        {% else %}
+
+            <h2 class="section-title" style="margin-top:10px;">Onward Flights ({{ onward_flights|length }} found)</h2>
+
+            {% if onward_flights %}
+            <table class="styled-table">
+                <tr>
+                    <th>Airline</th>
+                    <th>Flight #</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+                {% for f in onward_flights %}
+                <tr>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.flight_number }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_datetime }}</td>
+                    <td>{{ f.arrival_datetime }}</td>
+                    <td>
+                        {% if f.status == 'On-Time' %}
+                            <span class="badge badge-on">On-Time</span>
+                        {% elif f.status == 'Delayed' %}
+                            <span class="badge badge-delayed">Delayed</span>
+                        {% elif f.status == 'Cancelled' %}
+                            <span class="badge badge-cancelled">Cancelled</span>
+                        {% else %}
+                            {{ f.status }}
+                        {% endif %}
+                    </td>
+                    <td>${{ f.base_price }}</td>
+                    <td>
+                        {% if session.get('role') == 'customer' %}
+                            <a href="{{ url_for('purchase',
+                                                airline=f.airline_name,
+                                                flight=f.flight_number,
+                                                departure_raw=f.departure_datetime|replace(' ', '_')) }}">
+                                Purchase
+                            </a>
+                        {% else %}
+                            {% if trip_type == 'round' %}
+                                {# Guest + round-trip: ask them to log in first #}
+                                <a href="{{ url_for('customer_login',
+                                                    next=url_for('search')) }}">
+                                    Login to purchase round trip
+                                </a>
+                            {% else %}
+                                {# Guest + one-way: login then go to single-flight purchase #}
+                                <a href="{{ url_for('customer_login',
+                                                    next=url_for('purchase',
+                                                                 airline=f.airline_name,
+                                                                 flight=f.flight_number,
+                                                                 departure_raw=f.departure_datetime|replace(' ', '_'))) }}">
+                                    Login to purchase
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No onward flights found.</p>
+            {% endif %}
+
+            {% if trip_type == "round" %}
+                <h2 class="section-title">Return Flights ({{ return_flights|length }} found)</h2>
+
+                {% if return_flights %}
+                <table class="styled-table">
+                    <tr>
+                        <th>Airline</th>
+                        <th>Flight #</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for f in return_flights %}
+                    <tr>
+                        <td>{{ f.airline_name }}</td>
+                        <td>{{ f.flight_number }}</td>
+                        <td>{{ f.departure_airport }}</td>
+                        <td>{{ f.arrival_airport }}</td>
+                        <td>{{ f.departure_datetime }}</td>
+                        <td>{{ f.arrival_datetime }}</td>
+                        <td>
+                            {% if f.status == 'On-Time' %}
+                                <span class="badge badge-on">On-Time</span>
+                            {% elif f.status == 'Delayed' %}
+                                <span class="badge badge-delayed">Delayed</span>
+                            {% elif f.status == 'Cancelled' %}
+                                <span class="badge badge-cancelled">Cancelled</span>
+                            {% else %}
+                                {{ f.status }}
+                            {% endif %}
+                        </td>
+                        <td>${{ f.base_price }}</td>
+                        <td>
+                            {% if session.get('role') == 'customer' %}
+                                <a href="{{ url_for('purchase',
+                                                    airline=f.airline_name,
+                                                    flight=f.flight_number,
+                                                    departure_raw=f.departure_datetime|replace(' ', '_')) }}">
+                                    Purchase
+                                </a>
+                            {% else %}
+                                {% if trip_type == 'round' %}
+                                    <a href="{{ url_for('customer_login',
+                                                        next=url_for('search')) }}">
+                                        Login to purchase round trip
+                                    </a>
+                                {% else %}
+                                    <a href="{{ url_for('customer_login',
+                                                        next=url_for('purchase',
+                                                                     airline=f.airline_name,
+                                                                     flight=f.flight_number,
+                                                                     departure_raw=f.departure_datetime|replace(' ', '_'))) }}">
+                                        Login to purchase
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% else %}
+                    <p>No return flights found.</p>
+                {% endif %}
+            {% endif %}
+
+            <div style="margin-top:18px;">
+                <a href="{{ url_for('search') }}" class="btn-secondary">⬅ Back to Search</a>
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

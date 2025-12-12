@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Flight Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Change Status</h1>
+        <p class="subtitle">Flight {{ flight }} – {{ departure }}</p>
+
+        <form method="POST" class="form-grid">
+            <div>
+                <label>Select New Status</label>
+                <select name="status" required>
+                    <option value="On-Time">On-Time</option>
+                    <option value="Delayed">Delayed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:8px;">
+                <button type="submit" class="btn-primary">Update Status</button>
+                <a href="{{ url_for('staff_view_flights') }}" class="btn-secondary">Back to Flights</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

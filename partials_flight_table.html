@@ -1,0 +1,58 @@
+<table class="styled-table">
+    <tr>
+        <th>Flight #</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Departure</th>
+        <th>Arrival</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for f in filtered if filters_applied %}
+        <tr>
+            <td>{{ f.flight_number }}</td>
+            <td>{{ f.departure_airport }}</td>
+            <td>{{ f.arrival_airport }}</td>
+            <td>{{ f.departure_datetime }}</td>
+            <td>{{ f.arrival_datetime }}</td>
+            <td>{{ f.status }}</td>
+            <td>
+                <a href="/staff_change_status/{{ f.airline_name }}/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Change</a> |
+                <a href="/staff_view_customers/{{ f.airline_name }}/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Customers</a> |
+                <a href="/staff_ratings/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Ratings</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    {% for f in upcoming if not filters_applied %}
+        <tr>
+            <td>{{ f.flight_number }}</td>
+            <td>{{ f.departure_airport }}</td>
+            <td>{{ f.arrival_airport }}</td>
+            <td>{{ f.departure_datetime }}</td>
+            <td>{{ f.arrival_datetime }}</td>
+            <td>{{ f.status }}</td>
+            <td>
+                <a href="/staff_change_status/{{ f.airline_name }}/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Change</a> |
+                <a href="/staff_view_customers/{{ f.airline_name }}/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Customers</a> |
+                <a href="/staff_ratings/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Ratings</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    {% for f in past if not filters_applied %}
+        <tr>
+            <td>{{ f.flight_number }}</td>
+            <td>{{ f.departure_airport }}</td>
+            <td>{{ f.arrival_airport }}</td>
+            <td>{{ f.departure_datetime }}</td>
+            <td>{{ f.arrival_datetime }}</td>
+            <td>{{ f.status }}</td>
+            <td>
+                <a href="/staff_view_customers/{{ f.airline_name }}/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Customers</a> |
+                <a href="/staff_ratings/{{ f.flight_number }}/{{ f.departure_datetime | replace(' ', '_') }}">Ratings</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

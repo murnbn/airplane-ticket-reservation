@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Airplane</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-bar-inner">
+        <div><strong>Airline Staff – {{ session['airline'] }}</strong></div>
+        <div>
+            <a href="{{ url_for('staff_home') }}">Staff Home</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrapper">
+    <div class="card">
+        <h1 class="page-title">Add Airplane</h1>
+
+        <form method="POST" class="form-grid">
+            <div>
+                <label>ID</label>
+                <input type="text" name="id" required>
+            </div>
+
+            <div>
+                <label>Seats</label>
+                <input type="number" name="seats" required>
+            </div>
+
+            <div>
+                <label>Manufacturer</label>
+                <input type="text" name="manufacturer" required>
+            </div>
+
+            <div>
+                <label>Age (years)</label>
+                <input type="number" name="age" required>
+            </div>
+
+            <div style="grid-column:1 / -1; margin-top:8px;">
+                <button type="submit" class="btn-primary">Add Airplane</button>
+                <a href="{{ url_for('staff_home') }}" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

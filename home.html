@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Air Ticket Reservation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- TOP RIGHT: LOGIN / REGISTER -->
+<div class="top-right-buttons">
+    <a href="/customer_login">Customer Login</a>
+    <a href="/customer_register">Customer Register</a>
+    <a href="/staff_login">Staff Login</a>
+    <a href="/staff_register">Staff Register</a>
+</div>
+
+<!-- HERO SECTION -->
+<div class="hero">
+    <h1>Air Ticket Reservation System</h1>
+    <p>take a risk man</p>
+</div>
+
+<!-- SEARCH FORM -->
+<form action="/search_result" method="POST">
+
+    <!-- TRIP TYPE (NOW INSIDE THE FORM) -->
+    <div class="trip-type-box">
+        <label>
+            <input type="radio" name="trip_type" value="oneway" checked onclick="toggleReturnDate()"> One-way
+        </label>
+
+        <label >
+            <input type="radio" name="trip_type" value="round" onclick="toggleReturnDate()"> Round-trip
+        </label>
+    </div>
+
+    <div class="search-module">
+
+        <!-- SOURCE -->
+        <div class="search-field">
+            <span class="search-label">Leaving From</span>
+            <div class="select-box">
+                <select name="source" required>
+                    <option value="">Select Airport</option>
+                    {% for a in airports %}
+                    <option value="{{ a.airport_code }}">{{ a.city }} ({{ a.airport_code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- DESTINATION -->
+        <div class="search-field">
+            <span class="search-label">Going To</span>
+            <div class="select-box">
+                <select name="destination" required>
+                    <option value="">Select Airport</option>
+                    {% for a in airports %}
+                    <option value="{{ a.airport_code }}">{{ a.city }} ({{ a.airport_code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- DEPARTURE DATE -->
+        <div class="search-field">
+            <span class="search-label">Departure Date</span>
+            <div class="select-box">
+                <input type="date" name="departure_date" required>
+            </div>
+        </div>
+
+        <!-- RETURN DATE -->
+        <div class="search-field" id="return-date-section" style="display:none;">
+            <span class="search-label">Return Date</span>
+            <div class="select-box">
+                <input type="date" name="return_date">
+            </div>
+        </div>
+
+        <!-- BUTTON -->
+        <button class="search-btn" type="submit">Explore</button>
+
+    </div>
+</form>
+
+<script>
+function toggleReturnDate() {
+    let trip = document.querySelector('input[name="trip_type"]:checked').value;
+    document.getElementById("return-date-section").style.display =
+        trip === "round" ? "flex" : "none";
+}
+// optional: ensure correct state on load
+document.addEventListener('DOMContentLoaded', toggleReturnDate);
+</script>
+
+</body>
+</html>
